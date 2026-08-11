@@ -3,5 +3,9 @@ PROJECT OBJECTIVE
 
 PROJECT REQUIREMENTS
 - An initialization/setup page
-- A dashboard to view all mentions
+- A dashboard to view all mentions and relevant metrics
 - An "all mentions" screen where you can search through all the mentions, sort, etc.
+- Capability to "reset" user and login as someone else. 
+
+PROJECT INPUTS
+- user's full name and nickname/aliases, maybe some mild PII like where they are from/what school they go to, etc. ? Just depends on how involved I want this to be. Maybe future state. 
