@@ -33,6 +33,7 @@ def createAccount():
     connection2 = sqlite3.connect("database.db")
     cursor2 = connection2.cursor()
     inputData = request.get_json()
+    ### clear the db every time in order to provide most accurate, up-to-date webmentions. 
     cursor2.execute("DELETE FROM userregistry")
     cursor2.execute("""
         INSERT INTO userregistry(firstname, lastname, city, school, occupation, age)
