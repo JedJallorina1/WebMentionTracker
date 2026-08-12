@@ -33,6 +33,7 @@ def createAccount():
     connection2 = sqlite3.connect("database.db")
     cursor2 = connection2.cursor()
     inputData = request.get_json()
+    cursor2.execute("DELETE FROM userregistry")
     cursor2.execute("""
         INSERT INTO userregistry(firstname, lastname, city, school, occupation, age)
         VALUES (?, ?, ?, ?, ?, ?)
@@ -41,6 +42,24 @@ def createAccount():
     connection2.close()
     return "Account created successfully!"
 
+@app.route("/checkaccount")
+def checkAccount():
+    connection3 = sqlite3.connect("database.db")
+    cursor3 = connection3.cursor()
+    cursor3.execute("SELECT * FROM userregistry LIMIT 1")
+    accountData = cursor3.fetchone()
+    connection3.close()
+    if accountData:
+        return {
+            "firstname": accountData[1],
+            "lastname": accountData[2],
+            "city": accountData[3],
+            "school": accountData[4],
+            "occupation": accountData[5],
+            "age": accountData[6]
+        }
+    else:
+        return {}
 
 if __name__ == "__main__":
     app.run(debug=True)

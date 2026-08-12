@@ -10,23 +10,10 @@ const ageInput = document.getElementById("age-field");
 const submitButton = document.getElementById("submit-button");
 const clearButton = document.getElementById("clear-button");
 
-// functions
-function clearFields()
-{
-    firstNameInput.value = "";
-    lastNameInput.value = "";
-    cityInput.value = "";
-    schoolInput.value = "";
-    occupationInput.value = "";
-    ageInput.value = "";
-}
-function navigateToDashboard()
-{
-    window.location.href = "/dashboard"
-}
 
-// actionListeners
-submitButton.addEventListener("click", function()
+
+// functions
+function submitFields()
 {
     // check for blank fields
     if (firstNameInput.value == "" || lastNameInput.value == "" || cityInput.value == "" || schoolInput.value == "" || occupationInput.value == "")
@@ -77,9 +64,43 @@ submitButton.addEventListener("click", function()
         }).then(navigateToDashboard);
         clearFields();
     }
+}
+function clearFields()
+{
+    firstNameInput.value = "";
+    lastNameInput.value = "";
+    cityInput.value = "";
+    schoolInput.value = "";
+    occupationInput.value = "";
+    ageInput.value = "";
+}
+function navigateToDashboard()
+{
+    window.location.href = "/dashboard"
+}
+
+// actionListeners
+submitButton.addEventListener("click", function()
+{
+    submitFields();
 });
 
 clearButton.addEventListener("click", function()
 {
     clearFields();
 });
+
+// on load, check if an account already exists. If so, auto populate the fields with the existing account's information
+fetch("/checkaccount").then(response=>response.json()).then(data=>
+{
+    if (!(Object.keys(data).length === 0 && data.constructor === Object))
+    {
+        firstNameInput.value = data["firstname"];
+        lastNameInput.value = data["lastname"];
+        cityInput.value = data["city"];
+        schoolInput.value = data["school"];
+        occupationInput.value = data["occupation"];
+        ageInput.value = data["age"];
+        console.log(data["firstname"]);
+    }
+}); 
