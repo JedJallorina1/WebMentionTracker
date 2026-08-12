@@ -65,7 +65,7 @@ body h1, body h2, body h3, body h4, body h5, body h6
 .container-top img
 {
     display: flex;
-    width: 25%;
+    max-width: 600px;
     height: auto;
     padding: 40px;
     padding-right: 100px; 
