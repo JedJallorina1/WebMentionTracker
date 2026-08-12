@@ -24,11 +24,11 @@ age INTEGER
 )""")
 
 ### CLEAR THE DB:
-### cursor.execute("DELETE FROM userregistry")
+### cursor1.execute("DELETE FROM userregistry")
 connection1.commit()
 connection1.close()
 
-@app.route("createaccount", methods = ["POST"])
+@app.route("/createaccount", methods = ["POST"])
 def createAccount():
     connection2 = sqlite3.connect("database.db")
     cursor2 = connection2.cursor()
@@ -39,6 +39,7 @@ def createAccount():
     """, (inputData["firstname"], inputData["lastname"], inputData["city"], inputData["school"], inputData["occupation"], inputData["age"]))
     connection2.commit()
     connection2.close()
+    return "Account created successfully!"
 
 
 if __name__ == "__main__":

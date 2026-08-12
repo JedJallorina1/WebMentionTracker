@@ -22,35 +22,41 @@ function clearFields()
 }
 function navigateToDashboard()
 {
-    fetch("/dashboard");
+    window.location.href = "/dashboard"
 }
 
 // actionListeners
 submitButton.addEventListener("click", function()
 {
+    // check for blank fields
+    if (firstNameInput.value == "" || lastNameInput.value == "" || cityInput.value == "" || schoolInput.value == "" || occupationInput.value == "")
+    {
+        alert("Please fill in all fields.");
+    }
+    // check for valid age (between 0 and 120, not blank, does not contain whitespaces, and is a number)
     if (ageInput.value <= 0 || ageInput.value > 120)
     {
         alert("Please enter a valid age.");
     }
-    else if (typeof ageInput.value != "number" || Number.isNaN(ageInput.value))
+    else if (Number.isNaN(parseInt(ageInput.value, 10)))
     {
         alert("Please enter a valid age.");
     }
-    else if (ageInput.indexOf(' ') >= 0)
+    else if (/\s/.test(ageInput.value))
     {
         alert("Error: Age cannot contain spaces.");
     }
+    // all fields are valid, send data to server and navigate to dashboard
     else
     {
-        clearFields();
         let firstName = firstNameInput.value;
         let lastName = lastNameInput.value;
         let city = cityInput.value;
         let school = schoolInput.value;
         let occupation = occupationInput.value;
-        let age = ageInput.value;
-
-        fetch("/setupaccount",
+        let age = parseInt(ageInput.value, 10);
+        console.log(age);
+        fetch("/createaccount",
         {
             method: "POST",
             headers:
@@ -60,16 +66,16 @@ submitButton.addEventListener("click", function()
             body: JSON.stringify
             (
                 {
-                    firstName: firstName,
-                    lastName: lastName,
+                    firstname: firstName,
+                    lastname: lastName,
                     city: city,
                     school: school,
                     occupation: occupation,
                     age: age
                 }
             )
-        }).then(navigateToDashboard());
-
+        }).then(navigateToDashboard);
+        clearFields();
     }
 });
 
