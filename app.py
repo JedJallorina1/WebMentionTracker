@@ -78,7 +78,8 @@ def search():
         accountData = checkAccount()
         firstName = accountData["firstname"]
         lastName = accountData["lastname"]
-        city = accountData["city"]
+        ## city = accountData["city"]
+        city = ""
         school = accountData["school"]
         occupation = accountData["occupation"]
         age = accountData["age"]
@@ -98,7 +99,7 @@ def search():
         ## basic search of simply the first and last name and city
         ## last 365 days or less
         paramsBasicYear = {
-            "q": f"{firstName} {lastName} {city} {school}",
+            "q": f'"{firstName} {lastName}" {city} {school}',
             "freshness": "py"
             ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
         }
@@ -114,7 +115,7 @@ def search():
         ## basic search of simply the first and last name and city
         ## last 31 days or less
         paramsBasicMonth = {
-            "q": f"{firstName} {lastName} {city} {school}",
+            "q": f'"{firstName} {lastName}" {city} {school}',
             "freshness": "pm"
             ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
         }
@@ -129,7 +130,7 @@ def search():
         ## basic search of simply the first and last name and city
         ## last 7 days or less
         paramsBasicWeek = {
-            "q": f"{firstName} {lastName} {city} {school}",
+            "q": f'"{firstName} {lastName}" {city} {school}',
             "freshness": "pw"
             ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
         }
@@ -144,7 +145,7 @@ def search():
         ## basic search of simply the first and last name and city
         ## last 24 hours or less
         paramsBasicDay = {
-            "q": f"{firstName} {lastName} {city} {school}",
+            "q": f'"{firstName} {lastName}" {city} {school}',
             "freshness": "pd"
             ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
         }
@@ -158,7 +159,7 @@ def search():
 
         
         ## return one of the actual results
-        print(responseBasicYear.json()["web"]["results"][0]["description"])
+        ## print(responseBasicYear.json()["web"]["results"][0]["description"])
         return resultCounts
 
 
