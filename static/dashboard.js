@@ -37,6 +37,10 @@ fetch("/search").then(response=>response.json().then(data=>
     }
     else
     {
+        if (data["explicit"] == true)
+        {
+            alert("ALERT: Explicit results found.");
+        }
         yearCount.textContent = data["basicYear"]["count"];
         if (data["basicYear"]["count"] == 20)
         {

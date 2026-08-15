@@ -78,8 +78,7 @@ def search():
         accountData = checkAccount()
         firstName = accountData["firstname"]
         lastName = accountData["lastname"]
-        ## city = accountData["city"]
-        city = ""
+        city = accountData["city"]
         school = accountData["school"]
         occupation = accountData["occupation"]
         age = accountData["age"]
@@ -92,15 +91,16 @@ def search():
         }
 
         ## dict to hold all the result countsand highlight titles
-        resultCounts = {"basicYear": {"count": 0, "title": "None"}, "basicMonth": {"count": 0, "title": "None"}, "basicWeek": {"count": 0, "title": "None"}, "basicDay": {"count": 0, "title": "None"}} 
+        resultCounts = {"basicYear": {"count": 0, "title": "None"}, "basicMonth": {"count": 0, "title": "None"}, "basicWeek": {"count": 0, "title": "None"}, "basicDay": {"count": 0, "title": "None"}, "explicit": False} 
 
         ## PARAMETERS TO CUSTOMIZE DIFF. SEARCHES 
 
         ## basic search of simply the first and last name and city
         ## last 365 days or less
         paramsBasicYear = {
-            "q": f'"{firstName} {lastName}" {city} {school}',
-            "freshness": "py"
+            "q": f'{firstName} {lastName} {city} {school} {occupation}',
+            "freshness": "py",
+            "safesearch": "off"
             ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
         }
         responseBasicYear = requests.get(url, headers=headers, params=paramsBasicYear)
@@ -108,6 +108,8 @@ def search():
         resultCounts["basicYear"]["count"] = len(resultsBasicYear.get("web", {}).get("results", []))
         if (resultsBasicYear.get("web", {}).get("results", [])):
             resultCounts["basicYear"]["title"] = resultsBasicYear.get("web", {}).get("results", [])[0]["title"]
+            if (resultsBasicYear.get("web", {}).get("family_friendly") == False):
+                resultCounts["explicit"] = True
         else:
             resultCounts["basicYear"]["title"] = "None found."
         
@@ -115,8 +117,9 @@ def search():
         ## basic search of simply the first and last name and city
         ## last 31 days or less
         paramsBasicMonth = {
-            "q": f'"{firstName} {lastName}" {city} {school}',
-            "freshness": "pm"
+            "q": f'"{firstName} {lastName}" {city} {school} {occupation}',
+            "freshness": "pm",
+            "safesearch": "off"
             ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
         }
         responseBasicMonth = requests.get(url, headers=headers, params=paramsBasicMonth)
@@ -124,14 +127,17 @@ def search():
         resultCounts["basicMonth"]["count"] = len(resultsBasicMonth.get("web", {}).get("results", []))
         if (resultsBasicMonth.get("web", {}).get("results", [])):
             resultCounts["basicMonth"]["title"] = resultsBasicMonth.get("web", {}).get("results", [])[0]["title"]
+            if (resultsBasicMonth.get("web", {}).get("family_friendly") == False):
+                resultCounts["explicit"] = True
         else:
             resultCounts["basicMonth"]["title"] = "None found."
 
         ## basic search of simply the first and last name and city
         ## last 7 days or less
         paramsBasicWeek = {
-            "q": f'"{firstName} {lastName}" {city} {school}',
-            "freshness": "pw"
+            "q": f'"{firstName} {lastName}" {city} {school} {occupation}',
+            "freshness": "pw",
+            "safesearch": "off"
             ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
         }
         responseBasicWeek = requests.get(url, headers=headers, params=paramsBasicWeek)
@@ -139,14 +145,18 @@ def search():
         resultCounts["basicWeek"]["count"] = len(resultsBasicWeek.get("web", {}).get("results", []))
         if (resultsBasicWeek.get("web", {}).get("results", [])):
             resultCounts["basicWeek"]["title"] = resultsBasicWeek.get("web", {}).get("results", [])[0]["title"]
+            if (resultsBasicWeek.get("web", {}).get("family_friendly") == False):
+                resultCounts["explicit"] = True
         else:
             resultCounts["basicWeek"]["title"] = "None found."
 
         ## basic search of simply the first and last name and city
         ## last 24 hours or less
+        print(f"{firstName} {lastName} {city}")
         paramsBasicDay = {
-            "q": f'"{firstName} {lastName}" {city} {school}',
-            "freshness": "pd"
+            "q": f'"{firstName} {lastName}" {city} {school} {occupation}',
+            "freshness": "pd",
+            "safesearch": "off"
             ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
         }
         responseBasicDay = requests.get(url, headers=headers, params=paramsBasicDay)
@@ -154,6 +164,8 @@ def search():
         resultCounts["basicDay"]["count"] = len(resultsBasicDay.get("web", {}).get("results", []))
         if (resultsBasicDay.get("web", {}).get("results", [])):
             resultCounts["basicDay"]["title"] = resultsBasicDay.get("web", {}).get("results", [])[0]["title"]
+            if (resultsBasicDay.get("web", {}).get("family_friendly") == False):
+                resultCounts["explicit"] = True
         else:
             resultCounts["basicDay"]["title"] = "None found."
 
