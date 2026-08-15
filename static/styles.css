@@ -15,7 +15,7 @@
 }
 body
 {
-    background-color:#1f1f29
+    background-color:#0d1117
 }
 body h1, body h2, body h3, body h4, body h5, body h6
 {
@@ -36,6 +36,12 @@ body h1, body h2, body h3, body h4, body h5, body h6
     justify-content: space-between;
     padding-left: 50px;
 }
+#dashboard-title
+{
+    font-size: 55px;
+    display: flex;
+    margin: 0px;
+}
 
 .container-main
 {
@@ -44,7 +50,7 @@ body h1, body h2, body h3, body h4, body h5, body h6
     align-items: left;
     width: 75%;
     gap: 20px;
-    background-color: #1f1f29
+    background-color: #0d1117
 }
 .container-top-inputs, .container-middle-inputs, .container-bottom-inputs
 {
@@ -76,7 +82,7 @@ body h1, body h2, body h3, body h4, body h5, body h6
     border-radius: 5px;
     border-color: #cfe1ff;
     cursor: pointer;
-    background-color: #101015;
+    background-color: #0d1117;
     color: #cfe1ff;
 }
 .nav-container
@@ -90,12 +96,17 @@ body h1, body h2, body h3, body h4, body h5, body h6
 }
 .nav-container button
 {
+    font-size: large;
     width: fit-content;
     height: 30px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 5px;
     border-color: #cfe1ff;
     cursor: pointer;
-    background-color: #101015;
+    background-color: #0d1117;
     color: #cfe1ff;
 }
 
@@ -110,10 +121,11 @@ body h1, body h2, body h3, body h4, body h5, body h6
 
 #container-top-dashboard
 {
-    background-color: #101015; 
+    background-color: #0d1117; 
     border-radius: 5px;
     padding-bottom: 20px;
     margin: 0px;
+    margin-left: 0px;
 }
 .container-main-dashboard
 {
@@ -133,9 +145,8 @@ body h1, body h2, body h3, body h4, body h5, body h6
     justify-content: space-between;
     gap: 20px;
     height: 25%;
-    border-width: 0.25px;
-    border-color: #cfe1ff;
-    border: solid;
+    border-radius: 5px;
+    border: dashed 0.1px rgba(207, 225, 255, 0.15);
     padding: 25px;
     margin: 0px;
     margin-top: 5px;
