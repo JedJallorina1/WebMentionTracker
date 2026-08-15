@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 import sqlite3
+import requests
 app = Flask(__name__)
+
 
 @app.route("/")
 def home():
@@ -13,6 +15,7 @@ def dashboard():
 @app.route("/setup")
 def setup():
     return render_template("setup-page.html")
+
 
 connection1 = sqlite3.connect("database.db")
 cursor1 = connection1.cursor()
@@ -65,6 +68,99 @@ def checkAccount():
         }
     else:
         return {}
+
+
+@app.route("/search")
+def search():
+    if (checkAccount()) == {}:
+        return -1
+    else:
+        accountData = checkAccount()
+        firstName = accountData["firstname"]
+        lastName = accountData["lastname"]
+        city = accountData["city"]
+        school = accountData["school"]
+        occupation = accountData["occupation"]
+        age = accountData["age"]
+        url = "https://api.search.brave.com/res/v1/web/search"
+
+        headers = {
+            "Accept": "application/json",
+            "Accept-Encoding": "gzip",
+            "X-Subscription-Token": "BSAONIqZTGvi7cF_pOC07tbUiSsygY4" ## api key
+        }
+
+        ## dict to hold all the result countsand highlight titles
+        resultCounts = {"basicYear": {"count": 0, "title": "None"}, "basicMonth": {"count": 0, "title": "None"}, "basicWeek": {"count": 0, "title": "None"}, "basicDay": {"count": 0, "title": "None"}} 
+
+        ## PARAMETERS TO CUSTOMIZE DIFF. SEARCHES 
+
+        ## basic search of simply the first and last name and city
+        ## last 365 days or less
+        paramsBasicYear = {
+            "q": f"{firstName} {lastName} {city} {school}",
+            "freshness": "py"
+            ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
+        }
+        responseBasicYear = requests.get(url, headers=headers, params=paramsBasicYear)
+        resultsBasicYear = responseBasicYear.json()
+        resultCounts["basicYear"]["count"] = len(resultsBasicYear.get("web", {}).get("results", []))
+        if (resultsBasicYear.get("web", {}).get("results", [])):
+            resultCounts["basicYear"]["title"] = resultsBasicYear.get("web", {}).get("results", [])[0]["title"]
+        else:
+            resultCounts["basicYear"]["title"] = "None found."
+        
+
+        ## basic search of simply the first and last name and city
+        ## last 31 days or less
+        paramsBasicMonth = {
+            "q": f"{firstName} {lastName} {city} {school}",
+            "freshness": "pm"
+            ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
+        }
+        responseBasicMonth = requests.get(url, headers=headers, params=paramsBasicMonth)
+        resultsBasicMonth = responseBasicMonth.json()
+        resultCounts["basicMonth"]["count"] = len(resultsBasicMonth.get("web", {}).get("results", []))
+        if (resultsBasicMonth.get("web", {}).get("results", [])):
+            resultCounts["basicMonth"]["title"] = resultsBasicMonth.get("web", {}).get("results", [])[0]["title"]
+        else:
+            resultCounts["basicMonth"]["title"] = "None found."
+
+        ## basic search of simply the first and last name and city
+        ## last 7 days or less
+        paramsBasicWeek = {
+            "q": f"{firstName} {lastName} {city} {school}",
+            "freshness": "pw"
+            ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
+        }
+        responseBasicWeek = requests.get(url, headers=headers, params=paramsBasicWeek)
+        resultsBasicWeek = responseBasicWeek.json()
+        resultCounts["basicWeek"]["count"] = len(resultsBasicWeek.get("web", {}).get("results", []))
+        if (resultsBasicWeek.get("web", {}).get("results", [])):
+            resultCounts["basicWeek"]["title"] = resultsBasicWeek.get("web", {}).get("results", [])[0]["title"]
+        else:
+            resultCounts["basicWeek"]["title"] = "None found."
+
+        ## basic search of simply the first and last name and city
+        ## last 24 hours or less
+        paramsBasicDay = {
+            "q": f"{firstName} {lastName} {city} {school}",
+            "freshness": "pd"
+            ## pd == 24 hours or less, pw == 7 days or less, pm == 31 days or less, py 365 days or less
+        }
+        responseBasicDay = requests.get(url, headers=headers, params=paramsBasicDay)
+        resultsBasicDay = responseBasicDay.json()
+        resultCounts["basicDay"]["count"] = len(resultsBasicDay.get("web", {}).get("results", []))
+        if (resultsBasicDay.get("web", {}).get("results", [])):
+            resultCounts["basicDay"]["title"] = resultsBasicDay.get("web", {}).get("results", [])[0]["title"]
+        else:
+            resultCounts["basicDay"]["title"] = "None found."
+
+        
+        ## return one of the actual results
+        print(responseBasicYear.json()["web"]["results"][0]["description"])
+        return resultCounts
+
 
 if __name__ == "__main__":
     app.run(debug=True)

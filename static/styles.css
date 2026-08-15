@@ -140,9 +140,13 @@ body h1, body h2, body h3, body h4, body h5, body h6
 
 .container-main-dashboard-one, .container-main-dashboard-two, .container-main-dashboard-three, .container-main-dashboard-four
 {
+    width: 80%;
+    align-self: center;
+    align-content: center;
+    flex-wrap: wrap;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     gap: 20px;
     height: 25%;
     border-radius: 5px;
