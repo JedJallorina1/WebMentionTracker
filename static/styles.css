@@ -9,7 +9,7 @@
         transform: translateY(0);
     }
 }
-.container-top, .container-main, .container-top-inputs, .container-middle-inputs, .container-bottom-inputs
+.container-top, .container-main, .container-top-inputs, .container-middle-inputs, .container-bottom-inputs, .container-main-dashboard
 {
     animation: pageLoad 0.8s ease-in-out;
 }
@@ -79,6 +79,26 @@ body h1, body h2, body h3, body h4, body h5, body h6
     background-color: #101015;
     color: #cfe1ff;
 }
+.nav-container
+{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: auto;
+    padding: 20px;
+    justify-content: space-between;
+    gap: 10px;
+}
+.nav-container button
+{
+    width: fit-content;
+    height: 30px;
+    border-radius: 5px;
+    border-color: #cfe1ff;
+    cursor: pointer;
+    background-color: #101015;
+    color: #cfe1ff;
+}
+
 .container-top img
 {
     display: flex;
@@ -86,4 +106,54 @@ body h1, body h2, body h3, body h4, body h5, body h6
     height: auto;
     padding: 40px;
     padding-right: 100px; 
+}
+
+#container-top-dashboard
+{
+    background-color: #101015; 
+    border-radius: 5px;
+    padding-bottom: 20px;
+    margin: 0px;
+}
+.container-main-dashboard
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.container-main-dashboard-top
+{
+    width: 100%;
+}
+
+.container-main-dashboard-one, .container-main-dashboard-two, .container-main-dashboard-three, .container-main-dashboard-four
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    height: 25%;
+    border-width: 0.25px;
+    border-color: #cfe1ff;
+    border: solid;
+    padding: 25px;
+    margin: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.total-mentions-container, .thirty-day-mentions-container, .seven-day-mentions-container, .twentyfour-hour-mentions-container 
+{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 25%;
+    align-items: space-between;
+    justify-content: space-between;
+    gap: 10px;
+}
+#total-mentions-number, #thirty-day-mentions-number, #seven-day-mentions-number, #twentyfour-hour-mentions-number
+{
+    font-size: 75px;
+    padding: 0px;
+    margin: 0px;
 }

@@ -101,6 +101,5 @@ fetch("/checkaccount").then(response=>response.json()).then(data=>
         schoolInput.value = data["school"];
         occupationInput.value = data["occupation"];
         ageInput.value = data["age"];
-        console.log(data["firstname"]);
     }
 }); 

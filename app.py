@@ -10,6 +10,10 @@ def home():
 def dashboard():
     return render_template("dashboard.html")
 
+@app.route("/setup")
+def setup():
+    return render_template("setup-page.html")
+
 connection1 = sqlite3.connect("database.db")
 cursor1 = connection1.cursor()
 cursor1.execute("""
