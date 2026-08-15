@@ -1,5 +1,5 @@
 PROJECT OBJECTIVE 
-- Web Mention Tracker is a simple application that will show users a dashboard displaying all mentions of the user's name on the Internet, using simple web scraping and keyword queries
+- Web Presence Tracker is a simple application that will show users a dashboard displaying all mentions of the user's name on the Internet, using simple web scraping and keyword queries
 
 PROJECT REQUIREMENTS
 - An initialization/setup page
